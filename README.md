@@ -137,7 +137,9 @@ This will run MySQL 8 database with configured credentials and database named he
 <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
 ```
 Database schema will be reset with every start of this example until value of this property is changed to "none".
-Step 5: Data model
+
+# Step 5: Data model
+
 Person information, his nick and name, are mapped to Person Entity. It must be added to the `src/main/resources/META-INF/persistence.xml` file as:
 ```
 <class>io.helidon.examples.jpa.ni.Person</class>
@@ -183,13 +185,17 @@ public class Person {
 ## Step 6: Resource modification
 
 JAX-RS resource class GreetResource needs several changes to work with JPA and database.
-Entity Manager
+
+### Entity Manager
+
 EntityManager instance must be added to allow JPA code calls. It‘s just another GreetResource class instance private attribute:
 ```
     @PersistenceContext(unitName = "hello")
     private EntityManager em;
 ```
-JAX-RS request methods
+
+### JAX-RS request methods
+
 New JAX-RS POST method is required to allow creation of new Person records:
 ```
     /**
@@ -267,7 +273,7 @@ Also getMessage method needs to be modified to retrieve name mapped to nick from
     }
 ```
 
-## Step 6: Native image
+## Step 7: Native image
 
 Byte code for JPA must be generated at compile time and `hibernate.bytecode.provider` must be disabled. This must be configured in a new file `src/main/resources/hibernate.properties`:
 ```
@@ -281,7 +287,7 @@ Additional dependency must be added to pom.xml:
         </dependency>
 ```
 
-## Step 7: Tests modification
+## Step 8: Tests modification
 
 Last thing to modify is jUnit test. Current test will fail after all the modifications done to the project.
 Modified MainTest class is here:
@@ -404,7 +410,7 @@ class MainTest {
 }
 ```
 
-## Step 7: Building and testing
+## Step 9: Building and testing
 
 First make sure that `graalvm-ce-java11-20.2.0` including native image support is installed in your system.
 To build modified project as native image, simply execute:
